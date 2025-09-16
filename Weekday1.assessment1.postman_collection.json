@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "79846b31-9d9e-4542-910a-66eea7668b71",
+		"name": "Weekday1.assessment1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30522610",
+		"_collection_link": "https://orange-meadow-184143.postman.co/workspace/TestLeaf2025~56ddf2e9-2d25-4110-a1e9-b551290b36b4/collection/30522610-79846b31-9d9e-4542-910a-66eea7668b71?action=share&source=collection_link&creator=30522610"
+	},
+	"item": [
+		{
+			"name": "Get_Change_Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the response body for short_description\", function() {\r",
+							"   let responseFormat = pm.response.json();\r",
+							"   console.log(responseFormat);\r",
+							"   pm.expect(responseFormat.result[2].short_description).to.include('Add network' );\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify content type\",function(){\r",
+							"\r",
+							"    let responseFormat1=pm.response.headers.get('Content-Type');\r",
+							"    console.log(responseFormat1);\r",
+							"    pm.expect(responseFormat1).to.eql('application/json;charset=UTF-8');\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "19%wlOPj^tTH",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://dev304311.service-now.com/api/now/table/:tableName",
+					"protocol": "https",
+					"host": [
+						"dev304311",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						":tableName"
+					],
+					"variable": [
+						{
+							"key": "tableName",
+							"value": "change_request"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
