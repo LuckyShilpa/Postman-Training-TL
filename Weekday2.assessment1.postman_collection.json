@@ -1,0 +1,328 @@
+{
+	"info": {
+		"_postman_id": "934d1b13-cad4-49f7-a1a1-cc5606c120b7",
+		"name": "Weekday2.assessment1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30522610",
+		"_collection_link": "https://orange-meadow-184143.postman.co/workspace/TestLeaf2025~56ddf2e9-2d25-4110-a1e9-b551290b36b4/collection/30522610-934d1b13-cad4-49f7-a1a1-cc5606c120b7?action=share&source=collection_link&creator=30522610"
+	},
+	"item": [
+		{
+			"name": "Add_Change_Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Set the value for sys_id\",function()\r",
+							"{ var jsonResponse = pm.response.json()\r",
+							"  let sys_idpath = jsonResponse.result.sys_id\r",
+							"  console.log(sys_idpath);\r",
+							"  pm.collectionVariables.set(\"sysID\",sys_idpath);\r",
+							"\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"description\":\"Add a change request for category A\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{baseurl}}/{{basepath}}/:tablename",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"{{basepath}}",
+						":tablename"
+					],
+					"variable": [
+						{
+							"key": "tablename",
+							"value": "{{table_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status('OK');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check the passed sys ID is equal to retrived sys Id\",function()\r",
+							"{  \r",
+							"    let storedSysId = pm.collectionVariables.get(\"sysID\");\r",
+							"    console.log(\"Stored sysID:\", storedSysId);\r",
+							"\r",
+							"    let jsonData = pm.response.json();\r",
+							"    let sysIdFromResponse = jsonData.result.sys_id;\r",
+							"    console.log(\"SysID from response:\", sysIdFromResponse);\r",
+							"\r",
+							"    // Validate that both values match\r",
+							"    pm.expect(storedSysId).to.eql(sysIdFromResponse);\r",
+							"\r",
+							"   \r",
+							"\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{baseurl}}/{{basepath}}/:tablename/{{sysID}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"{{basepath}}",
+						":tablename",
+						"{{sysID}}"
+					],
+					"variable": [
+						{
+							"key": "tablename",
+							"value": "{{table_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify request and response match\", function () {\r",
+							"    // Parse the response\r",
+							"    let jsonResponse = pm.response.json();\r",
+							"\r",
+							"    // Get the request body\r",
+							"    let requestBody = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"    \r",
+							"    // Compare description\r",
+							"    pm.expect(jsonResponse.result.description).to.eql(requestBody.description);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"description\":\"Patch to be updated to c\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{baseurl}}/{{basepath}}/:tablename/{{sysID}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"{{basepath}}",
+						":tablename",
+						"{{sysID}}"
+					],
+					"variable": [
+						{
+							"key": "tablename",
+							"value": "{{table_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{baseurl}}/{{basepath}}/:tablename/{{sysID}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"{{basepath}}",
+						":tablename",
+						"{{sysID}}"
+					],
+					"variable": [
+						{
+							"key": "tablename",
+							"value": "{{table_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "basepath",
+			"value": ""
+		},
+		{
+			"key": "table_name",
+			"value": ""
+		},
+		{
+			"key": "sysID",
+			"value": ""
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		}
+	]
+}
